@@ -1,0 +1,25 @@
+{
+  "name": "latidos-por-mexico-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raulmar0/latidos-por-mexico-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raulmar0/latidos-por-mexico-bot/issues"
+  },
+  "homepage": "https://github.com/raulmar0/latidos-por-mexico-bot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.17.1"
+  }
+}
