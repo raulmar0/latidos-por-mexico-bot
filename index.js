@@ -1,6 +1,7 @@
 require('dotenv').config()
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const { questions } = require('./form');
 
 // Environment variables
 const country_code = process.env.COUNTRY_CODE;
@@ -40,7 +41,12 @@ class User {
 }
 
 let users = [];
-let currentUserLastStep;
+
+const getUser = (phone) => {
+  currentUser = users.find((user) => user.phone === phone);
+  console.log('getUser()', currentUser);
+  return currentUser;
+};
 
 const isNewUser = (phone) => {
   for (user of users) {
@@ -50,47 +56,44 @@ const isNewUser = (phone) => {
   }
   return true;
 };
-  
-const searchLastStep = (phone) => {
-  currentUser = users.findIndex((user) => user.phone === phone);
-  return users[currentUser].lastStep;
-};
-
-const changeLastStep = (phone, newStep) => {
-  currentUser = users.findIndex((user) => user.phone === phone);
-  users[currentUser].lastStep = newStep;
-  return
-}
 
 // Client side logic
 client.on('message', message => {
-	if(message.body === '!ping') {
-		client.sendMessage(message.from, 'pong');
-	}
-  
-  console.log('is new user?', isNewUser(message.from));
-  
+  console.log('mensaje de: ', message.from)
+  console.log('isNewUser?: ', isNewUser(message.from))
+
+  message.body = message.body.toLowerCase()
+
   if (isNewUser(message.from)) {
-    usersLength = users.length;
-    users.push(new User(message.from, 0));
-  }
-  
-  currentUserLastStep = searchLastStep(message.from);
-  console.log('Current user last step: ',currentUserLastStep);
-  
-  if (currentUserLastStep === 0) {
-    client.sendMessage(message.from, `
-      1. te mando al 1a
-      2. te mando al 1b
-    `);
-    changeLastStep(message.from, 1)
+    users.push(new User(message.from, 'init'));
+    currentUser = getUser(message.from);
+    console.log('first lastStep: ', currentUser.lastStep)
+    client.sendMessage(message.from, questions[0].content);
     return;
   }
-  if (message.body === '1' && currentUserLastStep === 1) {
-    client.sendMessage(message.from, `
-      1. te mando al 2a
-      2. te mando al 2b
-    `);
+  
+  currentUser = getUser(message.from);
+  console.log('lastStep: ', currentUser.lastStep)
+  
+  let lastQuestionKeyword = currentUser.lastStep;
+  let lastQuestion = questions.find(
+    (question) => question.keyword === lastQuestionKeyword
+  );
+  
+  if (message.body === 'a') {
+    nextQuestion = questions.find(
+      (question) => question.keyword === lastQuestion.a
+    );
+    client.sendMessage(message.from, nextQuestion.content);
+    currentUser.lastStep = nextQuestion.keyword;
+  }
+
+  if (message.body === 'b') {
+    nextQuestion = questions.find(
+      (question) => question.keyword === lastQuestion.b
+    );
+    client.sendMessage(message.from, nextQuestion.content);
+    currentUser.lastStep = nextQuestion.keyword;
   }
 
 });
