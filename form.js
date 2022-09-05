@@ -6,8 +6,10 @@ const questions = [
     a. Para iniciar
     b. Para información
     `,
-    a: 'inicio',
-    b: 'informacion',
+    options: [
+      {a: 'inicio'},
+      {b: 'informacion'}
+    ]
   },
   {
     keyword: 'inicio',
@@ -16,8 +18,10 @@ const questions = [
     a. Paso 2.a
     b. Paso 2.b
     `,
-    a: 'paso-2-a',
-    b: 'paso-2-b',
+    options: [
+      {a: 'paso-2-a'},
+      {b: 'paso-2-b'}
+    ]
   },
   {
     keyword: 'informacion',
@@ -26,8 +30,10 @@ const questions = [
     a. Info 2.a
     b. Info 2.b
     `,
-    a: 'info-2-a',
-    b: 'info-2-b',
+    options: [
+      {a: 'info-2-a'},
+      {b: 'info-2-b'}
+    ]
   },
   {
     keyword: 'paso-2-a',
@@ -36,8 +42,10 @@ const questions = [
     a. 
     b.
     `,
-    a: 'init',
-    b: 'init',
+    options: [
+      {a: 'init'},
+      {b: 'init'}
+    ]
   },
   {
     keyword: 'paso-2-b',
@@ -46,8 +54,10 @@ const questions = [
     a. 
     b. 
     `,
-    a: 'init',
-    b: 'init',
+    options: [
+      {a: 'init'},
+      {b: 'init'}
+    ]
   },
   {
     keyword: 'info-2-a',
@@ -56,8 +66,10 @@ const questions = [
     a. 
     b. 
     `,
-    a: 'init',
-    b: 'init',
+    options: [
+      {a: 'init'},
+      {b: 'init'}
+    ]
   },
   {
     keyword: 'info-2-b',
@@ -66,8 +78,10 @@ const questions = [
     a. 
     b. 
     `,
-    a: 'init',
-    b: 'init',
+    options: [
+      {a: 'init'},
+      {b: 'init'}
+    ]
   },
   
 ];

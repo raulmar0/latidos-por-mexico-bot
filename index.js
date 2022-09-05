@@ -32,6 +32,10 @@ client.on('ready', () => {
   }, 5000);
 });
 
+client.on('disconnected', () => {
+  console.log('DESCONECTADO');
+});
+
 // Form logic
 class User {
   constructor(phone, lastStep) {
@@ -79,22 +83,35 @@ client.on('message', message => {
   let lastQuestion = questions.find(
     (question) => question.keyword === lastQuestionKeyword
   );
-  
-  if (message.body === 'a') {
-    nextQuestion = questions.find(
-      (question) => question.keyword === lastQuestion.a
-    );
-    client.sendMessage(message.from, nextQuestion.content);
-    currentUser.lastStep = nextQuestion.keyword;
-  }
 
-  if (message.body === 'b') {
-    nextQuestion = questions.find(
-      (question) => question.keyword === lastQuestion.b
-    );
-    client.sendMessage(message.from, nextQuestion.content);
-    currentUser.lastStep = nextQuestion.keyword;
-  }
+  // options: [
+  //   {a: 'init'},
+  //   {b: 'init'}
+  // ]
+  
+  let lastKeywordOptionObj = lastQuestion.options.find((option) => Object.keys(option)[0] === message.body);
+  let lastKeywordOption = Object.values(lastKeywordOptionObj)[0]
+  nextQuestion = questions.find(
+    (question) => question.keyword === lastKeywordOption
+  );
+  client.sendMessage(message.from, nextQuestion.content);
+  currentUser.lastStep = nextQuestion.keyword;
+
+//   if (message.body === 'a') {
+//     nextQuestion = questions.find(
+//       (question) => question.keyword === lastQuestion.a
+//     );
+//     client.sendMessage(message.from, nextQuestion.content);
+//     currentUser.lastStep = nextQuestion.keyword;
+//   }
+
+//   if (message.body === 'b') {
+//     nextQuestion = questions.find(
+//       (question) => question.keyword === lastQuestion.b
+//     );
+//     client.sendMessage(message.from, nextQuestion.content);
+//     currentUser.lastStep = nextQuestion.keyword;
+//   }
 
 });
 
