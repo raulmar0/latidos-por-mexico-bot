@@ -1,7 +1,8 @@
 require('dotenv').config()
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const { questions } = require('./form');
+const { questions } = require('./questions');
+let { User, users, getUser, isNewUser } = require('./utils')
 
 // Environment variables
 const country_code = process.env.COUNTRY_CODE;
@@ -10,8 +11,9 @@ const msg = process.env.MSG;
 
 // Initialization process
 const client = new Client({
-  authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth(),
 });
+
 
 client.initialize();
 
@@ -32,86 +34,38 @@ client.on('ready', () => {
   }, 5000);
 });
 
-client.on('disconnected', () => {
-  console.log('DESCONECTADO');
-});
 
-// Form logic
-class User {
-  constructor(phone, lastStep) {
-    this.lastStep = lastStep;
-    this.phone = phone;
-  }
-}
-
-let users = [];
-
-const getUser = (phone) => {
-  currentUser = users.find((user) => user.phone === phone);
-  console.log('getUser()', currentUser);
-  return currentUser;
-};
-
-const isNewUser = (phone) => {
-  for (user of users) {
-    if (user.phone === phone) {
-      return false;
-    }
-  }
-  return true;
-};
-
-// Client side logic
+// Diagram resolving logic
 client.on('message', message => {
-  console.log('mensaje de: ', message.from)
-  console.log('isNewUser?: ', isNewUser(message.from))
-
   message.body = message.body.toLowerCase()
 
+  // When is a new user, we add it to a "register" of users
+  // and we display the first question
   if (isNewUser(message.from)) {
     users.push(new User(message.from, 'init'));
-    currentUser = getUser(message.from);
-    console.log('first lastStep: ', currentUser.lastStep)
     client.sendMessage(message.from, questions[0].content);
     return;
   }
   
   currentUser = getUser(message.from);
-  console.log('lastStep: ', currentUser.lastStep)
-  
+
+  // 1. We take the last keyword registered by the user
   let lastQuestionKeyword = currentUser.lastStep;
+  // 2. We search the whole question from questions.js
   let lastQuestion = questions.find(
     (question) => question.keyword === lastQuestionKeyword
   );
+  // 3. We find a match of the received msg in the options of the question
+  let answerMatchObj = lastQuestion.options.find((option) => Object.keys(option)[0] === message.body);
+  let answerMatchKeyword = Object.values(answerMatchObj)[0];
 
-  // options: [
-  //   {a: 'init'},
-  //   {b: 'init'}
-  // ]
-  
-  let lastKeywordOptionObj = lastQuestion.options.find((option) => Object.keys(option)[0] === message.body);
-  let lastKeywordOption = Object.values(lastKeywordOptionObj)[0]
-  nextQuestion = questions.find(
-    (question) => question.keyword === lastKeywordOption
+  // 4. We search a match of the match's keyword on questions.js
+  let nextQuestion = questions.find(
+    (question) => question.keyword === answerMatchKeyword
   );
+
   client.sendMessage(message.from, nextQuestion.content);
   currentUser.lastStep = nextQuestion.keyword;
-
-//   if (message.body === 'a') {
-//     nextQuestion = questions.find(
-//       (question) => question.keyword === lastQuestion.a
-//     );
-//     client.sendMessage(message.from, nextQuestion.content);
-//     currentUser.lastStep = nextQuestion.keyword;
-//   }
-
-//   if (message.body === 'b') {
-//     nextQuestion = questions.find(
-//       (question) => question.keyword === lastQuestion.b
-//     );
-//     client.sendMessage(message.from, nextQuestion.content);
-//     currentUser.lastStep = nextQuestion.keyword;
-//   }
 
 });
 
