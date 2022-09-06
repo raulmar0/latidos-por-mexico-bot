@@ -9,7 +9,7 @@ let users = [];
 
 const getUser = (phone) => {
   currentUser = users.find((user) => user.phone === phone);
-  // console.log('getUser()', currentUser);
+  console.log('getUser()', currentUser);
   return currentUser;
 };
 

@@ -1,7 +1,7 @@
 require('dotenv').config()
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const { questions } = require('./questions');
+const { questions, errorString } = require('./questions');
 let { User, users, getUser, isNewUser } = require('./utils')
 
 // Environment variables
@@ -37,6 +37,11 @@ client.on('ready', () => {
 
 // Diagram resolving logic
 client.on('message', message => {
+  if(message.body === 'easteregg'){
+    client.sendMessage(message.from, '¯\_( ͠• ͜ʖ ͡•)_/¯');
+    return
+  }
+
   message.body = message.body.toLowerCase()
 
   // When is a new user, we add it to a "register" of users
@@ -56,8 +61,12 @@ client.on('message', message => {
     (question) => question.keyword === lastQuestionKeyword
   );
   // 3. We find a match of the received msg in the options of the question
-  let answerMatchObj = lastQuestion.options.find((option) => Object.keys(option)[0] === message.body);
+  let answerMatchObj = lastQuestion.options.find((option) => Object.keys(option)[0] === message.body) || 'not found';
   let answerMatchKeyword = Object.values(answerMatchObj)[0];
+
+  if (answerMatchObj === 'not found') {
+    client.sendMessage(message.from, errorString)
+  }
 
   // 4. We search a match of the match's keyword on questions.js
   let nextQuestion = questions.find(

@@ -1,89 +1,229 @@
+// question.content needs to be strictly unindented
+// The first keyword needs to be stricly 'init'
+
+const errorString = '*Favor de escribir la letra de la opción deseada. Ejemplo: a*'
+
 const questions = [
   {
     keyword: 'init',
     content: `
-    Bienvenida
-    a. Para iniciar
-    b. Para información
+*Hola, buen día, ¿en qué podemos ayudarle?*
+*Favor de escribir la letra de la opción deseada. Ejemplo: a*
+
+ℹ️ Información general
+🅰️ Quiero donar
+🅱️ Tengo dolor de pecho, ¿qué puedo hacer?
     `,
     options: [
-      {a: 'inicio'},
-      {b: 'informacion'}
-    ]
-  },
-  {
-    keyword: 'inicio',
-    content: `
-    Inicio
-    a. Paso 2.a
-    b. Paso 2.b
-    `,
-    options: [
-      {a: 'paso-2-a'},
-      {b: 'paso-2-b'}
+      {i: 'informacion'},
+      {a: 'quiero-donar'},
+      {b: 'test'}
     ]
   },
   {
     keyword: 'informacion',
     content: `
-    Información
-    a. Info 2.a
-    b. Info 2.b
-    `,
-    options: [
-      {a: 'info-2-a'},
-      {b: 'info-2-b'}
-    ]
-  },
-  {
-    keyword: 'paso-2-a',
-    content: `
-    Paso 2.a
-    a. 
-    b.
+*Visite nuestra página web*
+*www.latidospormexico.org*
+
+🅰️ Menu principal
     `,
     options: [
       {a: 'init'},
-      {b: 'init'}
     ]
   },
   {
-    keyword: 'paso-2-b',
+    keyword: 'quiero-donar',
     content: `
-    Paso 2.b
-    a. 
-    b. 
+*En este apartado puede conocer más detalle sobre como apoyar a tratar las enfermedades cardiovasculares más oportunamente en México*
+*www.latidospormexico.org/donate*
+
+🅰️ Menu principal
     `,
     options: [
       {a: 'init'},
-      {b: 'init'}
     ]
   },
   {
-    keyword: 'info-2-a',
+    keyword: 'test',
     content: `
-    Info 2.a
-    a. 
-    b. 
+*Inicio de test*
+*¿Tiene dolor en el pecho de reciente comienzo?*
+
+🅰️ Si
+🅱️ No
     `,
     options: [
-      {a: 'init'},
-      {b: 'init'}
+      {a: 'numero-sintomas-1'},
+      {b: 'informacion'}
     ]
   },
   {
-    keyword: 'info-2-b',
+    keyword: 'numero-sintomas-1',
     content: `
-    Info 2.b
-    a. 
-    b. 
+*¿Siente dos o más de los siguientes síntomas?*
+*- Dolor en brazo izquierdo*
+*- Opresión en el pecho*
+*- Sudoración*
+*- Náuseas*
+*- Dolor Abdomninal*
+*- Sensación de desmayo*
+
+🅰️ Si 
+🅱️ No
+    `,
+    options: [
+      {a: 'duracion'},
+      {b: 'esfuerzo'}
+    ]
+  },
+  {
+    keyword: 'duracion',
+    content: `
+*¿Dura más de 10 minutos?*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'numero-sintomas-2'},
+      {b: 'esfuerzo'}
+    ]
+  },
+  {
+    keyword: 'esfuerzo',
+    content: `
+*¿Su dolor aparece con el esfuerzo físico? (Correr, caminar, cargar objetos)*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'rango-edad'},
+      {b: 'dolor-empeora'}
+    ]
+  },
+  {
+    keyword: 'numero-sintomas-2',
+    content: `
+*¿Siente dos o más de los siguientes síntomas?*
+*- Dolor estomacal*
+*- Dolor punzante en las costillas*
+*- Falta de aire*
+*- Palpitaciones en el pecho*
+*- Sensación de desmayo*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'rango-edad'},
+      {b: 'esfuerzo'}
+    ]
+  },
+  {
+    keyword: 'rango-edad',
+    content: `
+*¿Cuál es su rango de edad?*
+
+🅰️ Menor de 40 años
+🅱️ Mayor de 40 años
+    `,
+    options: [
+      {a: 'esfuerzo'},
+      {b: 'alguna-enfermedad'},
+    ]
+  },
+  {
+    keyword: 'alguna-enfermedad',
+    content: `
+*¿Tiene alguna o más de las siguientes enfermedades?*
+*- Diabetes mellitus*
+*- Hipertensión*
+*- Obesidad*
+*- Ateroesclerosis*
+*- Colesterol elevado*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'urgencia-nivel-3'},
+      {b: 'urgencia'},
+    ]
+  },
+  {
+    keyword: 'urgencia-nivel-3',
+    content: `
+*Diríjase al centro de salud más cercano, de ser posible a una unidad de tercer nivel. En calidad de urgencia*
+
+🅰️ Volver al inicio
     `,
     options: [
       {a: 'init'},
-      {b: 'init'}
     ]
   },
-  
+  {
+    keyword: 'urgencia',
+    content: `
+*Diríjase al centro de salud más cercano. En calidad de urgencia.*
+
+🅰️ Volver al inicio
+    `,
+    options: [
+      {a: 'init'},
+    ]
+  },
+  {
+    keyword: 'dolor-empeora',
+    content: `
+*¿Su dolor empeora con el movimiento? (Estiramientos, posturas)*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'no-urgencia'},
+      {b: 'eventos-estresantes'}
+    ]
+  },
+  {
+    keyword: 'eventos-estresantes',
+    content: `
+*¿Su dolor en pecho aparece después de eventos estresantes o situaciones extraordinarias?*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'no-urgencia'},
+      {b: 'sin-razon'}
+    ]
+  },
+  {
+    keyword: 'sin-razon',
+    content: `
+*¿Su dolor en pecho parece no tener razón aparente y se resuelve en menos de 5 minutos?*
+
+🅰️ Si
+🅱️ No
+    `,
+    options: [
+      {a: 'no-urgencia'},
+      {b: 'no-urgencia'}
+    ]
+  },
+  {
+    keyword: 'no-urgencia',
+    content: `
+*Probablemente su dolor no se relacione con eventos cardiovasculares. Le recomendamos acudir a su médico de confianza para una evaluación completa.*
+
+🅰️ Volver al inicio
+    `,
+    options: [
+      {a: 'init'},
+    ]
+  },
 ];
 
-module.exports = { questions };
+module.exports = { questions, errorString };
