@@ -35,7 +35,7 @@ const questions = [
   {
     keyword: 'quiero-donar',
     content: `
-*En este apartado puede conocer más detalle sobre como apoyar a tratar las enfermedades cardiovasculares más oportunamente en México*
+*En este apartado puede conocer más detalles sobre cómo apoyar a tratar las enfermedades cardiovasculares más oportunamente en México*
 *www.latidospormexico.org/donate*
 
 🅰️ Menu principal
@@ -130,7 +130,7 @@ const questions = [
 🅱️ Mayor de 40 años
     `,
     options: [
-      {a: 'esfuerzo'},
+      {a: 'no-urgencia'},
       {b: 'alguna-enfermedad'},
     ]
   },
@@ -155,7 +155,7 @@ const questions = [
   {
     keyword: 'urgencia-nivel-3',
     content: `
-*Diríjase al centro de salud más cercano, de ser posible a una unidad de tercer nivel. En calidad de urgencia*
+*Diríjase al centro de salud más cercano, de ser posible a una unidad de tercer nivel o contacte a los servicios de emergencia de su ciudad (911). En calidad de urgencia.*
 
 🅰️ Volver al inicio
     `,
@@ -166,7 +166,7 @@ const questions = [
   {
     keyword: 'urgencia',
     content: `
-*Diríjase al centro de salud más cercano. En calidad de urgencia.*
+*Diríjase al centro de salud más cercano o contacte a los servicios de emergencia de su ciudad (911). En calidad de urgencia.*
 
 🅰️ Volver al inicio
     `,
