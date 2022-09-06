@@ -35,7 +35,7 @@ const questions = [
   {
     keyword: 'quiero-donar',
     content: `
-*En este apartado puede conocer más detalle sobre como apoyar a tratar las enfermedades cardiovasculares más oportunamente en México*
+*En este apartado puede conocer más detalles sobre cómo apoyar a tratar las enfermedades cardiovasculares más oportunamente en México*
 *www.latidospormexico.org/donate*
 
 🅰️ Menu principal
