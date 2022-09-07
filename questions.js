@@ -130,7 +130,7 @@ const questions = [
 🅱️ Mayor de 40 años
     `,
     options: [
-      {a: 'no-urgencia'},
+      {a: 'urgencia'},
       {b: 'alguna-enfermedad'},
     ]
   },
