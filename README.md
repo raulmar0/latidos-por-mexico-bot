@@ -4,6 +4,8 @@
 
 [![](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5218135453539?text=Hola)
 
+For a simpler implementation [try my new whatsapp-questionnaire-bot library](https://github.com/raulmar0/whatsapp-questionnaire-bot)
+
 This is a project done in collaboration with medical students from ITESM who used a diagnose diagram that was then combined with Whatsapp in order to reach as many people as possible thanks to its wide adoption in Latam
 
 ![](https://raulmarfiles.blob.core.windows.net/random/latidos-por-mexico-diagrama.jpeg)
